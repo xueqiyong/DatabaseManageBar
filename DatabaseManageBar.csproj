@@ -64,6 +64,12 @@
     <Compile Include="DataBaseConnect.designer.cs">
       <DependentUpon>DataBaseConnect.cs</DependentUpon>
     </Compile>
+    <Compile Include="fm_Chart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fm_Chart.Designer.cs">
+      <DependentUpon>fm_Chart.cs</DependentUpon>
+    </Compile>
     <Compile Include="fm_CreateDatabaseTable.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,10 +123,14 @@
     <Compile Include="fm_InsertDicCmd.cs" />
     <Compile Include="DataBaseConnectCmd.cs" />
     <Compile Include="fm_PreviewDataCmd.cs" />
+    <Compile Include="fm_ChartCmd.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataBaseConnect.resx">
       <DependentUpon>DataBaseConnect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fm_Chart.resx">
+      <DependentUpon>fm_Chart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="fm_CreateDatabaseTable.resx">
       <DependentUpon>fm_CreateDatabaseTable.cs</DependentUpon>

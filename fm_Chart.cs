@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevComponents.DotNetBar;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DatabaseManageBar
 {
-    public partial class fm_DatabaseManage : DevComponents.DotNetBar.OfficeForm
+    public partial class fm_Chart : DevComponents.DotNetBar.OfficeForm
     {
-        public fm_DatabaseManage()
+        public fm_Chart()
         {
             InitializeComponent();
             //禁用Glass主题
@@ -29,6 +30,12 @@ namespace DatabaseManageBar
             DataTable dt = new DataTable();
             string tableName = "tb_SHJJBZH";
             //string tableName = "" + rankname;
+            //获取选中属性的英文名
+            string selectedColunmCN = cbb_Clounm.SelectedItem.ToString();
+            string sqlSelectE = "select * from tb_dict where TableName = 'tb_SHJJBZH' and FieldNameNote = '" + selectedColunmCN + "'";
+            DataTable dtDicColunm = SqlOperation.SelectData(sqlSelectE);
+            string selectedColunmE = dtDicColunm.Rows[0]["FieldName"].ToString();
+
 
             switch (rankname)
             {
@@ -38,11 +45,11 @@ namespace DatabaseManageBar
 
                     string sqlSelectCode0 = "select TownCode from Town where ProvinceCode = '" + dtProvinceCode0.Rows[0][0].ToString() + "'";
                     DataTable dtCode0 = SqlOperation.SelectData(sqlSelectCode0);
-                    
-                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
-                    string sqlSelect0 = "select * from " + tableName + " where (";
 
-                    for (int row = 0; row < dtCode0.Rows.Count-1; row++)
+                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
+                    string sqlSelect0 = "select ID_AUTO,SJ,DJ,XJ,XZ,TOWNCODE,SJ_S1," + selectedColunmE + " from " + tableName + " where (";
+
+                    for (int row = 0; row < dtCode0.Rows.Count - 1; row++)
                     {
                         string townCode0 = dtCode0.Rows[row][0].ToString();
                         sqlSelect0 += "TOWNCODE = '" + townCode0 + "' or ";
@@ -52,18 +59,18 @@ namespace DatabaseManageBar
                     dtInfo = dt;
                     break;
                     //dt = 
-                    break;
+                    
                 case "City":
                     string sqlSelectProvinceCode1 = "select CityCode from City where CityName = '" + rankCHname + "'";
                     DataTable dtProvinceCode1 = SqlOperation.SelectData(sqlSelectProvinceCode1);
 
                     string sqlSelectCode1 = "select TownCode from Town where CityCode = '" + dtProvinceCode1.Rows[0][0].ToString() + "'";
                     DataTable dtCode1 = SqlOperation.SelectData(sqlSelectCode1);
-                    
-                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
-                    string sqlSelect1 = "select * from " + tableName + " where (";
 
-                    for (int row = 0; row < dtCode1.Rows.Count-1; row++)
+                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
+                    string sqlSelect1 = "select ID_AUTO,SJ,DJ,XJ,XZ,TOWNCODE,SJ_S1," + selectedColunmE + " from " + tableName + " where (";
+
+                    for (int row = 0; row < dtCode1.Rows.Count - 1; row++)
                     {
                         string townCode1 = dtCode1.Rows[row][0].ToString();
                         sqlSelect1 += "TOWNCODE = '" + townCode1 + "' or ";
@@ -73,16 +80,16 @@ namespace DatabaseManageBar
                     dtInfo = dt;
                     break;
                 case "County":
-                   string sqlSelectProvinceCode2 = "select CountyCode from County where CountyName = '" + rankCHname + "'";
+                    string sqlSelectProvinceCode2 = "select CountyCode from County where CountyName = '" + rankCHname + "'";
                     DataTable dtProvinceCode2 = SqlOperation.SelectData(sqlSelectProvinceCode2);
 
                     string sqlSelectCode2 = "select TownCode from Town where CountyCode = '" + dtProvinceCode2.Rows[0][0].ToString() + "'";
                     DataTable dtCode2 = SqlOperation.SelectData(sqlSelectCode2);
-                    
-                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
-                    string sqlSelect2 = "select * from " + tableName + " where (";
 
-                    for (int row = 0; row < dtCode2.Rows.Count-1; row++)
+                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
+                    string sqlSelect2 = "select ID_AUTO,SJ,DJ,XJ,XZ,TOWNCODE,SJ_S1," + selectedColunmE + " from " + tableName + " where (";
+
+                    for (int row = 0; row < dtCode2.Rows.Count - 1; row++)
                     {
                         string townCode2 = dtCode2.Rows[row][0].ToString();
                         sqlSelect2 += "TOWNCODE = '" + townCode2 + "' or ";
@@ -91,66 +98,149 @@ namespace DatabaseManageBar
                     dt = SqlOperation.SelectData(sqlSelect2);
                     dtInfo = dt;
                     break;
-                    
+
                 case "Town":
                     //dt = DataManager.getPlotSelectResult(tablename, cmbCropType.SelectedItem.ToString(), dT_maize_s.Value, dT_maize_e.Value, rankCHname);
                     string sqlSelectCode = "select TownCode from Town where TownName = '" + rankCHname + "'";
                     DataTable dtCode = SqlOperation.SelectData(sqlSelectCode);
                     string townCode = dtCode.Rows[0][0].ToString();
-                    string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
+                    string sqlSelect = "select ID_AUTO,SJ,DJ,XJ,XZ,TOWNCODE,SJ_S1," + selectedColunmE + " from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
                     dt = SqlOperation.SelectData(sqlSelect);
                     dtInfo = dt;
                     break;
-            }
-            //string sqlSelectDic = "select * from tb_dict";
-            //DataTable dtDic = SqlOperation.SelectData(sqlSelectDic);
-            //for (int rowIndex = 0; rowIndex < dt.Columns.Count - 1; rowIndex++)
-            //{
-            //    string column = dt.Columns[rowIndex].ColumnName;
+            }  
 
-            //    string sqlSelectCN = "select * from tb_dict where TableName = tb_SHJJBZH and FieldName = '" + column + "'";
-            //    DataTable dtDic = SqlOperation.SelectData(sqlSelectCN);
-            //    dt.Columns[rowIndex].ColumnName = dtDic.Rows[0]["FieldNameNote"].ToString();
-            
-            //}
-
-                if (dt.Rows.Count != 0)
+            if (dt.Rows.Count != 0)
+            {
+                for (int columnIndex = 1; columnIndex < dt.Columns.Count; columnIndex++)
                 {
-                    for (int columnIndex = 1; columnIndex < dt.Columns.Count ; columnIndex++)
+                    string column = dt.Columns[columnIndex].ColumnName;
+
+                    string sqlSelectCN = "select * from tb_dict where TableName = 'tb_SHJJBZH' and FieldName = '" + column + "'";
+                    DataTable dtDic = SqlOperation.SelectData(sqlSelectCN);
+                    dt.Columns[columnIndex].ColumnName = dtDic.Rows[0]["FieldNameNote"].ToString();
+
+                }
+
+                //dtInfo = DataManager.Convert_ColumeName(DataManager.convert_TableValue(rankname, typename, dt));
+                //InitDataSet();
+                dataGridView1.DataSource = dt;
+
+                //建图表
+                List<double> listNUm = new List<double>();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    if (dt.Rows[i][selectedColunmCN].ToString() == "NULL")
                     {
-                        string column = dt.Columns[columnIndex].ColumnName;
-
-                        string sqlSelectCN = "select * from tb_dict where TableName = 'tb_SHJJBZH' and FieldName = '" + column + "'";
-                        DataTable dtDic = SqlOperation.SelectData(sqlSelectCN);
-                        dt.Columns[columnIndex].ColumnName = dtDic.Rows[0]["FieldNameNote"].ToString();
-
+                        dt.Rows[i][selectedColunmCN] = "0";
                     }
-
-                    //dtInfo = DataManager.Convert_ColumeName(DataManager.convert_TableValue(rankname, typename, dt));
-                    //InitDataSet();
-                    dataGridView1.DataSource = dt;
-                    dataGridView1.Columns[0].ReadOnly = true;
-                    dataGridView1.Columns[1].ReadOnly = true;
-                    dataGridView1.Columns[2].ReadOnly = true;
-                    dataGridView1.Columns[3].ReadOnly = true;
-                    dataGridView1.Columns[4].ReadOnly = true;
-                    dataGridView1.Columns[5].ReadOnly = true;
-                    dataGridView1.Columns[6].ReadOnly = true;
-
+                    double num = Convert.ToDouble(dt.Rows[i][selectedColunmCN].ToString());
+                    listNUm.Add(num);
+                }
+               
+                
+                microChart1.Visible = true;
+                string chartType = cbb_ChartType.SelectedItem.ToString();
+                if (chartType == "折线图")
+                {
+                    microChart1.ChartType = eMicroChartType.Line;
+                    lable_ChartName.Visible = true;
+                    lable_ChartName.Text = rankCHname + selectedColunmCN + "变化折线图";
                 }
                 else
+                    if (chartType == "散点图")
+                    {
+                        microChart1.ChartType = eMicroChartType.Plot;
+                        lable_ChartName.Visible = true;
+                        lable_ChartName.Text = rankCHname + selectedColunmCN + "变化散点图";
+                    }
+                    else
+                    {
+                        microChart1.ChartType = eMicroChartType.Pie;
+                        lable_ChartName.Visible = true;
+                        lable_ChartName.Text = rankCHname + selectedColunmCN + "统计饼状图";
+                    }
+                microChart1.DataPoints = listNUm;
+                
+                microChart1.LineChartStyle.DrawZeroLine = false;//表的0线除掉
+                microChart1.Update();
+                //microChart1.LineChartStyle.FirstPointColor = Color.Green;
+                //microChart1.LineChartStyle.LastPointColor = Color.DarkRed;
+                
+                //microChart1.LineChartStyle.HighPointColor = Color.Blue;
+                //microChart1.LineChartStyle.LowPointColor = Color.Red;
+            }
+            else
+            {
+                MessageBox.Show("没有符合条件的记录");
+                dataGridView1.DataSource = null;
+            }
+
+        }
+        public bool StrIsInt(string Str)
+        {
+            bool flag = true;
+            if (Str != "")
+            {
+                for (int i = 0; i < Str.Length; i++)
                 {
-                    MessageBox.Show("没有符合条件的记录");
-                    dataGridView1.DataSource = null;
+                    if (!Char.IsNumber(Str, i))
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                flag = false;
+            }
+            return flag;
+        }
+        public void GetAttribute()
+        {
+            string sqlSelectColunm = "select * from tb_SHJJBZH";
+            DataTable dtColunm = SqlOperation.SelectData(sqlSelectColunm);
+
+            for (int colunmIndex = 7; colunmIndex < dtColunm.Columns.Count;colunmIndex++)
+            {
+                bool isNum = true;
+                for (int rowIndex = 0; rowIndex < dtColunm.Rows.Count; rowIndex++)
+                {
+                    string temp = dtColunm.Rows[rowIndex][colunmIndex].ToString();
+                    if (temp == "NULL")
+                    {
+                        temp = "0";
+                    }
+                    bool isInt = StrIsInt(temp);
+                    if (!isInt)
+                    {
+                        isNum = false;
+                        break;
+                    }
+                }
+                if (isNum)
+                {
+                    string colunm = dtColunm.Columns[colunmIndex].ColumnName;
+                    string sqlSelectCN = "select * from tb_dict where TableName = 'tb_SHJJBZH' and FieldName = '" + colunm + "'";
+                    DataTable dtDic = SqlOperation.SelectData(sqlSelectCN);
+                    cbb_Clounm.Items.Add(dtDic.Rows[0]["FieldNameNote"].ToString());
+                    cbb_Clounm.SelectedIndex = 0;
                 }
 
+            }
+            
         }
 
         private void DataBaseManager_Load(object sender, EventArgs e)
         {
             TreeNodeOperate.generateTree(treeView1);
-            //cmbCropType.DataSource = DataManager.get_CropType();
-            //cmb_Type.SelectedIndex = 0;
+            GetAttribute();
+            string[] items = {"折线图","散点图","饼状图" };
+            cbb_ChartType.DataSource = items;
+            cbb_ChartType.SelectedIndex = 0;
+           
+
         }
         string tablename = "";
         string rankname = "";
@@ -160,8 +250,8 @@ namespace DatabaseManageBar
         {
             if (rankname != "")
             {
-                    BindDataSource();
-                    InitDataSet();
+                BindDataSource();
+                InitDataSet();
 
             }
             else
@@ -169,120 +259,6 @@ namespace DatabaseManageBar
                 MessageBox.Show("请选择管理级别！");
             }
         }
-
-
-        //public Dictionary<string, string> return_Dicts(List<string> list_value)
-        //{
-        //    Dictionary<string, string> dicts = new Dictionary<string, string>();
-        //    string column1 = "";
-        //    switch (rankname)
-        //    {
-        //        case "PLOT":
-        //            column1 = DataBaseOperate.get_PlotCodeName(list_value[0]);
-        //            break;
-        //        case "COUNTY":
-        //            column1 = DataBaseOperate.getCountyCode(list_value[0]);
-        //            break;
-        //        case "VILLAGE":
-        //            column1 = DataBaseOperate.getVillCode(list_value[0]);
-        //            break;
-        //        case "TOWN":
-        //            column1 = DataBaseOperate.getTownCode(list_value[0]);
-        //            break;
-        //    }
-        //    dicts.Add(DataManager.get_TableEName(dataGridView1.Columns[0].Name), column1);
-
-        //    dicts.Add(DataManager.get_TableEName(dataGridView1.Columns[1].Name), list_value[1]);
-        //    dicts.Add(DataManager.get_TableEName(dataGridView1.Columns[2].Name), DataBaseOperate.get_CropCode(list_value[2]));
-        //    if (tablename.Contains("SOILNUTRIENT"))
-        //    {
-        //        dicts.Add(DataManager.get_TableEName(dataGridView1.Columns[3].Name), DataBaseOperate.get_NutrientCode(list_value[3]));
-        //        dicts.Add(DataManager.get_TableEName(dataGridView1.Columns[4].Name), list_value[4]);
-        //    }
-        //    else
-        //    {
-        //        dicts.Add(DataManager.get_TableEName(dataGridView1.Columns[3].Name), list_value[3]);
-        //    }
-        //    return dicts;
-        //}
-
-
-
-        //修改
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-            if (dataGridView1.SelectedCells.Count != 0)//是否选择某个单元格
-            {
-                //List<string> list = new List<string>();
-                string sqlSelectDic = "select * from tb_SHJJBZH";
-                DataTable dtDic = SqlOperation.SelectData(sqlSelectDic);
-                for (int colunmIndex = 7; colunmIndex < dataGridView1.ColumnCount; colunmIndex++)
-                {
-                  int currentRow = dataGridView1.CurrentRow.Index;
-                  string data = dataGridView1.Rows[currentRow].Cells[colunmIndex].Value.ToString();
-                  string id = dataGridView1.Rows[currentRow].Cells["ID_AUTO"].Value.ToString();
-                  string sqlUpdate = "update tb_SHJJBZH set " + dtDic.Columns[colunmIndex].ColumnName + "= '" + data + "' where ID_AUTO =" + id + "";
-                  SqlOperation.SqlCom(sqlUpdate);
-                }
-                
-
-                //string sqlUpdate = "update tb_SHJJBZH set ";
-
-
-                MessageBox.Show("修改成功！");
-                //绑定数据源
-                BindDataSource();
-            }
-            else
-            {
-                MessageBox.Show("请选择修改项！");
-            }
-        }
-        //删除
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-            int selectedRows = dataGridView1.SelectedRows.Count;
-            if (selectedRows != 0)
-            {
-                int currentRow = dataGridView1.CurrentRow.Index;
-                
-                for (int i = 0; i < selectedRows; i++)
-                {
-                    string id = dataGridView1.Rows[currentRow - i].Cells["ID_AUTO"].Value.ToString();
-                    string sqlDelete = "delete from tb_SHJJBZH where ID_AUTO = " + id;
-                    SqlOperation.SqlCom(sqlDelete);
-                    
-                }
-
-                MessageBox.Show("删除成功！");
-                BindDataSource();
-            }
-            else
-            {
-                MessageBox.Show("请选择删除项！");
-            }
-        }
-
-
-        //根据选择的表名来更新养分列表
-        //private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    //string value = DataManager.get_TableName(cmb_Rank.SelectedItem.ToString());
-        //    if (cmb_Type.SelectedItem.ToString().Contains("土壤"))
-        //    {
-        //        label2.Visible = true;
-        //        cmb_Nutrient.Visible = true;
-        //        cmb_Nutrient.DataSource = DataManager.get_NutrientType();
-        //    }
-        //    else
-        //    {
-        //        label2.Visible = false;
-        //        cmb_Nutrient.Visible = false;
-        //        cmb_Nutrient.DataSource = null;
-        //    }
-        //}
 
         int pageSize = 0;     //每页显示行数
         int nMax = 0;         //总记录数
@@ -388,40 +364,30 @@ namespace DatabaseManageBar
             int level = e.Node.Level;
 
             switch (level)
-            { 
+            {
                 case 0:
                     rankname = "Province";
-                break;
+                    break;
                 case 1:
                     rankname = "City";
-                break;
+                    break;
                 case 2:
                     rankname = "County";
-                break;
+                    break;
                 case 3:
                     rankname = "Town";
-                break;
+                    break;
             }
 
-
-
-            //if (name.EndsWith("管理局"))
-            //{
-            //    rankname = "TOWN";
-            //}
-            //else if (name.EndsWith("农场"))
-            //{
-            //    rankname = "TOWN";
-            //}
-            //else if (name.EndsWith("作业区"))
-            //{
-            //    rankname = "VILLAGE";
-            //}
-            //else if (name.EndsWith("作业站"))
-            //{
-            //    rankname = "PLOT";
-            //}
         }
 
+        private void cbb_ChartType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (microChart1.Visible)
+            {
+                BindDataSource();
+                InitDataSet();
+            }
+        }
     }
 }

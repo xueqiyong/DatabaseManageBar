@@ -51,6 +51,10 @@ namespace DatabaseManageBar
                     itemDef.ID = "DatabaseManageBar.fm_DatabaseManageCmd";
                     itemDef.Group = false;
                     break;
+                case 8:
+                    itemDef.ID = "DatabaseManageBar.fm_ChartCmd";
+                    itemDef.Group = true;
+                    break;
                 
                 default:
                     break;
@@ -60,7 +64,7 @@ namespace DatabaseManageBar
 
         public long ItemCount
         {
-            get { return 8; }
+            get { return 9; }
         }
 
         public string Name
