@@ -27,7 +27,7 @@ namespace DatabaseManageBar
         public void BindDataSource()
         {
             DataTable dt = new DataTable();
-            string tableName = "tb_SHJJBZH";
+            string tableName = "HHWaterDSS.dbo.tb_SHJJBZH";
             //string tableName = "" + rankname;
 
             switch (rankname)
@@ -47,12 +47,11 @@ namespace DatabaseManageBar
                         string townCode0 = dtCode0.Rows[row][0].ToString();
                         sqlSelect0 += "TOWNCODE = '" + townCode0 + "' or ";
                     }
-                    sqlSelect0 += "TOWNCODE = '" + dtCode0.Rows[dtCode0.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "'";
+                    sqlSelect0 += "TOWNCODE = '" + dtCode0.Rows[dtCode0.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "'";
                     dt = SqlOperation.SelectData(sqlSelect0);
                     dtInfo = dt;
                     break;
-                    //dt = 
-                    break;
+                   
                 case "City":
                     string sqlSelectProvinceCode1 = "select CityCode from City where CityName = '" + rankCHname + "'";
                     DataTable dtProvinceCode1 = SqlOperation.SelectData(sqlSelectProvinceCode1);
@@ -68,7 +67,7 @@ namespace DatabaseManageBar
                         string townCode1 = dtCode1.Rows[row][0].ToString();
                         sqlSelect1 += "TOWNCODE = '" + townCode1 + "' or ";
                     }
-                    sqlSelect1 += "TOWNCODE = '" + dtCode1.Rows[dtCode1.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "'";
+                    sqlSelect1 += "TOWNCODE = '" + dtCode1.Rows[dtCode1.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "'";
                     dt = SqlOperation.SelectData(sqlSelect1);
                     dtInfo = dt;
                     break;
@@ -87,7 +86,7 @@ namespace DatabaseManageBar
                         string townCode2 = dtCode2.Rows[row][0].ToString();
                         sqlSelect2 += "TOWNCODE = '" + townCode2 + "' or ";
                     }
-                    sqlSelect2 += "TOWNCODE = '" + dtCode2.Rows[dtCode2.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "'";
+                    sqlSelect2 += "TOWNCODE = '" + dtCode2.Rows[dtCode2.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "'";
                     dt = SqlOperation.SelectData(sqlSelect2);
                     dtInfo = dt;
                     break;
@@ -97,7 +96,7 @@ namespace DatabaseManageBar
                     string sqlSelectCode = "select TownCode from Town where TownName = '" + rankCHname + "'";
                     DataTable dtCode = SqlOperation.SelectData(sqlSelectCode);
                     string townCode = dtCode.Rows[0][0].ToString();
-                    string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
+                    string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "' and TOWNCODE = '" + townCode + "'";
                     dt = SqlOperation.SelectData(sqlSelect);
                     dtInfo = dt;
                     break;

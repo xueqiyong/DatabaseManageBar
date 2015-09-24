@@ -28,7 +28,7 @@ namespace DatabaseManageBar
         public void BindDataSource()
         {
             DataTable dt = new DataTable();
-            string tableName = "tb_SHJJBZH";
+            string tableName = "HHWaterDSS.dbo.tb_SHJJBZH";
             //string tableName = "" + rankname;
             //获取选中属性的英文名
             string selectedColunmCN = cbb_Clounm.SelectedItem.ToString();
@@ -46,7 +46,7 @@ namespace DatabaseManageBar
                     string sqlSelectCode0 = "select TownCode from Town where ProvinceCode = '" + dtProvinceCode0.Rows[0][0].ToString() + "'";
                     DataTable dtCode0 = SqlOperation.SelectData(sqlSelectCode0);
 
-                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
+                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "' and TOWNCODE = '" + townCode + "'";
                     string sqlSelect0 = "select ID_AUTO,SJ,DJ,XJ,XZ,TOWNCODE,SJ_S1," + selectedColunmE + " from " + tableName + " where (";
 
                     for (int row = 0; row < dtCode0.Rows.Count - 1; row++)
@@ -54,7 +54,7 @@ namespace DatabaseManageBar
                         string townCode0 = dtCode0.Rows[row][0].ToString();
                         sqlSelect0 += "TOWNCODE = '" + townCode0 + "' or ";
                     }
-                    sqlSelect0 += "TOWNCODE = '" + dtCode0.Rows[dtCode0.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "'";
+                    sqlSelect0 += "TOWNCODE = '" + dtCode0.Rows[dtCode0.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "'";
                     dt = SqlOperation.SelectData(sqlSelect0);
                     dtInfo = dt;
                     break;
@@ -67,7 +67,7 @@ namespace DatabaseManageBar
                     string sqlSelectCode1 = "select TownCode from Town where CityCode = '" + dtProvinceCode1.Rows[0][0].ToString() + "'";
                     DataTable dtCode1 = SqlOperation.SelectData(sqlSelectCode1);
 
-                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
+                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "' and TOWNCODE = '" + townCode + "'";
                     string sqlSelect1 = "select ID_AUTO,SJ,DJ,XJ,XZ,TOWNCODE,SJ_S1," + selectedColunmE + " from " + tableName + " where (";
 
                     for (int row = 0; row < dtCode1.Rows.Count - 1; row++)
@@ -75,7 +75,7 @@ namespace DatabaseManageBar
                         string townCode1 = dtCode1.Rows[row][0].ToString();
                         sqlSelect1 += "TOWNCODE = '" + townCode1 + "' or ";
                     }
-                    sqlSelect1 += "TOWNCODE = '" + dtCode1.Rows[dtCode1.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "'";
+                    sqlSelect1 += "TOWNCODE = '" + dtCode1.Rows[dtCode1.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "'";
                     dt = SqlOperation.SelectData(sqlSelect1);
                     dtInfo = dt;
                     break;
@@ -86,7 +86,7 @@ namespace DatabaseManageBar
                     string sqlSelectCode2 = "select TownCode from Town where CountyCode = '" + dtProvinceCode2.Rows[0][0].ToString() + "'";
                     DataTable dtCode2 = SqlOperation.SelectData(sqlSelectCode2);
 
-                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
+                    //string sqlSelect = "select * from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "' and TOWNCODE = '" + townCode + "'";
                     string sqlSelect2 = "select ID_AUTO,SJ,DJ,XJ,XZ,TOWNCODE,SJ_S1," + selectedColunmE + " from " + tableName + " where (";
 
                     for (int row = 0; row < dtCode2.Rows.Count - 1; row++)
@@ -94,17 +94,17 @@ namespace DatabaseManageBar
                         string townCode2 = dtCode2.Rows[row][0].ToString();
                         sqlSelect2 += "TOWNCODE = '" + townCode2 + "' or ";
                     }
-                    sqlSelect2 += "TOWNCODE = '" + dtCode2.Rows[dtCode2.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "'";
+                    sqlSelect2 += "TOWNCODE = '" + dtCode2.Rows[dtCode2.Rows.Count - 1][0].ToString() + "') and  SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "'";
                     dt = SqlOperation.SelectData(sqlSelect2);
                     dtInfo = dt;
                     break;
 
                 case "Town":
-                    //dt = DataManager.getPlotSelectResult(tablename, cmbCropType.SelectedItem.ToString(), dT_maize_s.Value, dT_maize_e.Value, rankCHname);
+                    //dt = DataManager.getPlotSelectResult(tablename, cmbCropType.SelectedItem.ToString(), dT_maize_s.Value.Year, dT_maize_e.Value.Year, rankCHname);
                     string sqlSelectCode = "select TownCode from Town where TownName = '" + rankCHname + "'";
                     DataTable dtCode = SqlOperation.SelectData(sqlSelectCode);
                     string townCode = dtCode.Rows[0][0].ToString();
-                    string sqlSelect = "select ID_AUTO,SJ,DJ,XJ,XZ,TOWNCODE,SJ_S1," + selectedColunmE + " from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value + "' and '" + dT_maize_e.Value + "' and TOWNCODE = '" + townCode + "'";
+                    string sqlSelect = "select ID_AUTO,SJ,DJ,XJ,XZ,TOWNCODE,SJ_S1," + selectedColunmE + " from " + tableName + " where SJ_S1 between '" + dT_maize_s.Value.Year + "' and '" + dT_maize_e.Value.Year + "' and TOWNCODE = '" + townCode + "'";
                     dt = SqlOperation.SelectData(sqlSelect);
                     dtInfo = dt;
                     break;
